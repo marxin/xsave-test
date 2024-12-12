@@ -1,4 +1,4 @@
-use std::arch::x86_64::{_xrstor64, _xsave64};
+use std::arch::x86_64::{_xrstor64, _xsavec64};
 
 #[repr(align(64))]
 #[derive(Debug)]
@@ -39,9 +39,9 @@ unsafe fn test_xsave64() {
     let mut b = XsaveArea::new();
 
     unsafe {
-        _xsave64(a.ptr(), m);
+        _xsavec64(a.ptr(), m);
         _xrstor64(a.ptr(), m);
-        _xsave64(b.ptr(), m);
+        _xsavec64(b.ptr(), m);
     }
 
     assert_eq!(a, b);
